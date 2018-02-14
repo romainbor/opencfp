@@ -1,12 +1,11 @@
 language: php
 php: 7.1
-
 before_script:
-  composer install
-
-script:
-  phpcs ./classes
-
+  - composer install
+script: 
+  - docker run --rm -v $PWD:/app phpqa/phpcs .
+  - docker run --rm -v $PWD:/app phpqa/security-checker security:check
+  - phpunit
 notifications:
   email:
     on_success: never
